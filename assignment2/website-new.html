@@ -8,39 +8,79 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
+    <div class="row container-fluid padding-right-zero">
+        <div class="col-sm-4 hidden-xs padding-right-zero">
             <p class="navbar-text pull-left">
                 <a class="glyphicon glyphicon-chevron-left"  href="website-list.html"></a>
             </p>
+            <a class="navbar-brand" href="#">Websites</a>
+            <p class="navbar-text pull-right">
+                <a class="glyphicon glyphicon-plus"  href="website-new.html"></a>
+            </p>
+        </div>
+        <div class="col-sm-8">
+            <a class="navbar-text pull-left hidden-lg hidden-md hidden-sm" href="website-list.html">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
             <a class="navbar-brand" href="#">New Website</a>
             <p class="navbar-text pull-right">
-                <span class="glyphicon glyphicon-ok"></span>
+                <a class="glyphicon glyphicon-ok" href="website-list.html"></a>
             </p>
         </div>
     </div>
     </div>
 </nav>
 
-<div class="container">
-    <form>
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control margin-bottom" id="name" placeholder="Name"/>
-            <label for="desc">Description</label>
-            <textarea class="form-control margin-bottom" rows="7" id="desc" placeholder="Description"></textarea>
-        </div>
-    </form>
+<div class="row">
+    <div class="col-sm-4 hidden-xs container">
+        <form>
+            <ul class="list-group">
+                <li class="list-group-item">
+                <span class="badge">
+                    <a class="glyphicon glyphicon-cog" href="website-edit.html"></a>
+                </span>
+                    <a href="page-list.html">Address Book App</a>
+                </li>
+                <li class="list-group-item">
+                <span class="badge">
+                    <a class="glyphicon glyphicon-cog" href="website-edit.html"></a>
+                </span>
+                    <a href="page-list.html">Blogger</a>
+                </li>
+                <li class="list-group-item">
+                <span class="badge">
+                <a class="glyphicon glyphicon-cog" href="website-edit.html"></a>
+                </span>
+                    <a href="page-list.html">Blogging App</a>
+                </li>
+                <li class="list-group-item">
+                <span class="badge">
+                <a class="glyphicon glyphicon-cog" href="website-edit.html"></a>
+                </span>
+                    <a href="page-list.html">Script Testing App</a>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="col-sm-8">
+        <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control margin-bottom" id="name" placeholder="Name"/>
+                <label for="desc">Description</label>
+                <textarea class="form-control margin-bottom" rows="7" id="desc" placeholder="Description"></textarea>
+            </div>
+        </form>
+    </div>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container">
-        <div class="navbar-footer">
+    <div class="container-fluid">
             <p class="navbar-text pull-right">
                 <a class="glyphicon glyphicon-user" href="profile.html"></a>
             </p>
-        </div>
     </div>
 </nav>
 </body>
