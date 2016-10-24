@@ -1,0 +1,56 @@
+<nav class="navbar navbar-default navbar-fixed-top navbar-page">
+    <div class="container-fluid">
+        <p class="navbar-text pull-left">
+            <a class="glyphicon glyphicon-chevron-left page-glyphicon" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page"></a>
+        </p>
+        <a class="navbar-brand page-brand" href="#">Widgets</a>
+        <p class="navbar-text pull-right">
+            <a class="glyphicon glyphicon-plus page-glyphicon" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new"></a>
+        </p>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <form>
+        <ul class="list-group">
+                <div ng-switch="widget.widgetType" ng-repeat="widget in model.widgets">
+                    <li class="list-group-item">
+                    <div ng-switch="widget.size" ng-switch-when="HEADER">
+                        <h1 ng-switch-when="1">{{widget.text}}</h1>
+                        <h2 ng-switch-when="2">{{widget.text}}</h2>
+                        <h3 ng-switch-when="3">{{widget.text}}</h3>
+                        <h4 ng-switch-when="4">{{widget.text}}</h4>
+                        <h5 ng-switch-when="5">{{widget.text}}</h5>
+                        <h6 ng-switch-when="6">{{widget.text}}</h6>
+                    </div>
+                    <div ng-switch-when="YOUTUBE">
+                        <iframe width="widget.width" height="315" ng-src="{{model.checkSafeYouTubeUrl(widget.url)}}" frameborder="0" allowfullscreen class="video-frame"></iframe>
+                    </div>
+                    <div ng-switch-when="IMAGE">
+                        <img width="widget.width" ng-src="{{widget.url}}" class="img-responsive center-block">
+                    </div>
+                    <div ng-switch-when="HTML" ng-bind-html="model.checkSafeHtml(widget.text)">
+                    </div>
+                        <div class='block2'>
+                            <a class="glyphicon glyphicon-cog" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}"></a>
+                            <a class="glyphicon glyphicon-align-justify badge-justify" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget"></a>
+                        </div>
+                    </li>
+                </div>
+        </ul>
+    </form>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom navbar-page">
+    <div class="container-fluid">
+        <p class="navbar-text pull-left">
+            <a class="glyphicon glyphicon-play page-glyphicon" href="#"></a>
+        </p>
+        <p class="navbar-text pull-left">
+            <a class="glyphicon glyphicon-eye-open page-glyphicon" href="#"></a>
+        </p>
+        <p class="navbar-text pull-right">
+            <a class="glyphicon glyphicon-user page-glyphicon-blue" href="#/user/{{model.userId}}"></a>
+        </p>
+    </div>
+</nav>
