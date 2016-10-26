@@ -1,0 +1,32 @@
+<nav class="navbar navbar-default navbar-fixed-top navbar-page">
+    <div class="container-fluid">
+        <a class="navbar-text pull-left" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page">
+            <span class="glyphicon glyphicon-chevron-left page-glyphicon"></span>
+        </a>
+        <a class="navbar-brand page-brand" href="#">New Page</a>
+        <p class="navbar-text pull-right">
+            <a class="glyphicon glyphicon-ok page-glyphicon"
+               ng-click="model.createPage(model.page)"></a>
+        </p>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <form>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input ng-model="model.page.name" type="text" class="form-control margin-bottom" id="name" placeholder="Page Name"/>
+            <label for="title">Title</label>
+            <input ng-model="model.page.title" type="text" class="form-control margin-bottom" id="title" placeholder="Page Title"/>
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page" type="button" class="btn btn-danger btn-block">Delete</a>
+        </div>
+    </form>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom navbar-page">
+    <div class="container-fluid">
+        <p class="navbar-text pull-right">
+            <a class="glyphicon glyphicon-user page-glyphicon-blue" href="#/user/{{model.userId}}"></a>
+        </p>
+    </div>
+</nav>

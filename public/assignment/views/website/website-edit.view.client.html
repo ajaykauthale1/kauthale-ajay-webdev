@@ -1,0 +1,58 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="row container-fluid padding-right-zero">
+        <div class="col-sm-4 hidden-xs padding-right-zero">
+            <p class="navbar-text pull-left">
+                <a class="glyphicon glyphicon-chevron-left"  href="#/user/{{model.userId}}/website"></a>
+            </p>
+            <a class="navbar-brand" href="#">Websites</a>
+            <p class="navbar-text pull-right">
+                <a class="glyphicon glyphicon-plus"  href="#/user/{{model.userId}}/website/new"></a>
+            </p>
+        </div>
+        <div class="col-sm-8">
+            <a class="navbar-text pull-left hidden-lg hidden-md hidden-sm" href="#/user/{{model.userId}}/website">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="navbar-brand" href="#">Edit Website</a>
+            <p class="navbar-text pull-right">
+                <a class="glyphicon glyphicon-ok" ng-click="model.updateWebsite()"></a>
+            </p>
+        </div>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-sm-4 hidden-xs container-fluid">
+        <form>
+            <ul class="list-group">
+                <div ng-repeat="website in model.websites">
+                    <li class="list-group-item">
+                    <span class="badge">
+                        <a class="glyphicon glyphicon-cog"
+                           href="#/user/{{website.developerId}}/website/{{website._id}}"></a>
+                    </span>
+                        <a href="#/user/{{website.developerId}}/website/{{website._id}}/page">{{website.name}}</a>
+                    </li>
+                </div>
+            </ul>
+        </form>
+    </div>
+    <div class="col-sm-8">
+        <form>
+            <div class="form-group container-fluid">
+                <label for="name">Website Name</label>
+                <input ng-model="model.website.name" type="text" class="form-control margin-bottom" id="name" placeholder="Name" value="Website 1"/>
+                <label for="desc">Website Description</label>
+                <textarea class="form-control margin-bottom" rows="5" id="desc" placeholder="Description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ornare libero ut venenatis lobortis. Maecenas nec diam arcu. Etiam iaculis at metus eu aliquam. Vivamus sit amet ultrices libero. Donec posuere, tellus vel ullamcorper tristique, magna mi placerat nisl, vitae pulvinar ipsum metus in elit.
+            </textarea>
+                <a ng-click="model.deleteWebsite()" type="button" class="btn btn-danger btn-block">Delete</a>
+            </div>
+        </form>
+    </div>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <p class="navbar-text pull-right">
+            <a class="glyphicon glyphicon-user" href="#/user/{{model.userId}}"></a>
+        </p>
+    </div>
+</nav>
