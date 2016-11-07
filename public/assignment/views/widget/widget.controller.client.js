@@ -11,7 +11,10 @@
     function WidgetListController($routeParams, WidgetService, $sce) {
         var vm = this;
         var pageId = $routeParams['pid'];
-        vm.widgets = WidgetService.findWidgetsByPageId(pageId);
+        WidgetService.findWidgetsByPageId(pageId)
+            .success(function (widgets) {
+                vm.widgets = widgets;
+            });
         vm.userId = $routeParams['uid'];
         vm.websiteId = $routeParams['wid'];
         vm.pageId = $routeParams['pid'];
@@ -38,16 +41,23 @@
         vm.pageId = $routeParams['pid'];
         vm.userId = $routeParams['uid'];
         vm.widgetId = $routeParams['wgid'];
-        vm.widget = WidgetService.findWidgetById(vm.widgetId);
+        WidgetService.findWidgetById(vm.widgetId)
+            .success(function (w) {
+                vm.widget = w;
+            });
 
         function updateWidget(widget) {
-            WidgetService.updateWidget(vm.widgetId, widget);
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+            WidgetService.updateWidget(vm.widgetId, widget)
+                .success(function () {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                });
         }
 
         function deleteWidget() {
-            WidgetService.deleteWidget(vm.widgetId);
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+            WidgetService.deleteWidget(vm.widgetId)
+                .success(function () {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                });
         }
     }
 
@@ -60,33 +70,32 @@
         vm.createYouTube = createYouTube;
         vm.pageId = $routeParams['pid'];
         vm.userId = $routeParams['uid'];
-        vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
+
+        WidgetService.findWidgetsByPageId(vm.pageId)
+            .success(function (widgets) {
+                vm.widgets = widgets;
+            });
 
         function createWidget(widget) {
-            var id = WidgetService.createWidget(vm.pageId, widget);
-            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
-            return id;
+            WidgetService.createWidget(vm.pageId, widget)
+                .success(function (wd) {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+wd._id);
+                });
         }
         
         function createHeader() {
-            var widget = {"_id": "", "widgetType": "HEADER", "pageId": "", "size": 3, "text": ""};
-            var id = createWidget(widget);
-            vm.widget = widget;
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+id);
+            var widget = {"widgetType": "HEADER"};
+            vm.widget = createWidget(widget);
         }
 
         function createImage() {
-            var widget = {"_id": "", "widgetType": "IMAGE", "pageId": "", "width": "", "url": ""}
-            var id = createWidget(widget);
-            vm.widget = widget;
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+id);
+            var widget = {"widgetType": "IMAGE"};
+            vm.widget = createWidget(widget);
         }
 
         function createYouTube() {
-            var widget = { "_id": "", "widgetType": "YOUTUBE", "pageId": "", "width": "", "url": "" };
-            var id = createWidget(widget);
-            vm.widget = widget;
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+id);
+            var widget = {"widgetType": "YOUTUBE"};
+            vm.widget = createWidget(widget);
         }
     }
 })();

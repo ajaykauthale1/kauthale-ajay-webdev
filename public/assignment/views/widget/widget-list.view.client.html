@@ -1,3 +1,11 @@
+<!--
+<script lang="javascript">
+    $(function () {
+        $(".list-group").sortable();
+    })
+</script>
+-->
+
 <nav class="navbar navbar-default navbar-fixed-top navbar-page">
     <div class="container-fluid">
         <p class="navbar-text pull-left">
@@ -12,7 +20,8 @@
 
 <div class="container-fluid">
     <form>
-        <ul class="list-group">
+        <input  name="pageId" value="{{model.pageId}}"   style="display: none"/>
+        <ul class="list-group" jga-sortable>
                 <div ng-switch="widget.widgetType" ng-repeat="widget in model.widgets">
                     <li class="list-group-item">
                     <div ng-switch="widget.size" ng-switch-when="HEADER">

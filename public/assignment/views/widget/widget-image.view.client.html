@@ -5,7 +5,7 @@
         </a>
         <a class="navbar-brand page-brand" href="#">Widget Edit</a>
         <p class="navbar-text pull-right">
-            <a class="glyphicon glyphicon-ok page-glyphicon" ng-click="model.updateWidget()"></a>
+            <a class="glyphicon glyphicon-ok page-glyphicon" ng-click="model.updateWidget(model.widget)"></a>
         </p>
     </div>
     </div>
@@ -13,21 +13,25 @@
 
 <div class="container-fluid">
     <form>
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control margin-bottom" id="name" placeholder="Name"/>
-            <label for="text">Text</label>
-            <input ng-model="model.widget.text" type="text" class="form-control margin-bottom" id="text" placeholder="Text"/>
-            <label for="url">URL</label>
-            <input ng-model="model.widget.url" type="url" class="form-control margin-bottom" id="url" placeholder="URL"
-                   value="https://i.kinja-img.com/gawker-media/image/upload/s--XpvLUxSu--/c_scale,fl_progressive,q_80,w_800/e1vkmed0sohnyhr0gaar.jpg"/>
-            <label for="width">Width</label>
-            <input ng-model="model.widget.width" type="text" class="form-control margin-bottom" id="width" placeholder="Width" value="100%"/>
-            <label for="upload">Upload</label>
-            <input type="file" class="form-control margin-bottom file" id="upload">
-            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" type="button" class="btn btn-primary btn-block">Upload Image</a>
-            <a ng-click="model.deleteWidget()" type="button" class="btn btn-danger btn-block">Delete</a>
-        </div>
+    </form>
+    <form action="/api/uploads"  method="post" enctype="multipart/form-data" name="imageForm" novalidate>
+        <label for="name">Name</label>
+        <input ng-model="model.widget.name" name="name" type="text" class="form-control margin-bottom" id="name" placeholder="Name"/>
+        <label for="text">Text</label>
+        <input name="text" ng-model="model.widget.text" type="text" class="form-control margin-bottom" id="text" placeholder="Text"/>
+        <label for="url">URL</label>
+        <input ng-model="model.widget.url" type="url" class="form-control margin-bottom" id="url" placeholder="URL"
+               value="https://i.kinja-img.com/gawker-media/image/upload/s--XpvLUxSu--/c_scale,fl_progressive,q_80,w_800/e1vkmed0sohnyhr0gaar.jpg"/>
+        <label for="width">Width</label>
+        <input name="width" ng-model="model.widget.width" type="text" class="form-control margin-bottom" id="width" placeholder="Width" value="100%"/>
+        <label for="upload">Upload</label>
+        <input  name="myFile"   type="file" class="form-control margin-bottom file" id="upload"/>
+        <input  name="widgetId" value="{{model.widget._id}}"   style="display: none"/>
+        <input  name="pageId" value="{{model.pageId}}"   style="display: none"/>
+        <input  name="websiteId" value="{{model.websiteId}}"   style="display: none"/>
+        <input  name="userId" value="{{model.userId}}"   style="display: none"/>
+        <button type="submit"   class="btn btn-block btn-primary">Upload Image</button>
+        <a ng-click="model.deleteWidget()" type="button" class="btn btn-danger btn-block">Delete</a>
     </form>
 </div>
 

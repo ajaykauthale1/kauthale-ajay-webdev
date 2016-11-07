@@ -10,10 +10,9 @@
     </div>
     </div>
 </nav>
-
 <div class="container-fluid">
     <form>
-        <div ng-show="model.widget" ng-include="'views/widget/widget-'+model.widget.widgetType+'.view.client.html'"></div>
+       <div ng-if="model.widget" ng-include="'views/widget/widget-'+model.widget.widgetType+'.view.client.html'"></div>
     </form>
 </div>
 

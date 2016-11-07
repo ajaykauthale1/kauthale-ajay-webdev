@@ -6,13 +6,7 @@
         .module("WebAppMaker")
         .factory("UserService", UserService);
     
-    function UserService() {
-        var users = [
-            {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder",  email: "alice.wonder@gmail.com"},
-            {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley",  email: "bob.marley@gmail.com"  },
-            {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia",  email: "charly.gracia@gmail.com"  },
-            {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi", email: "jose.annuzi@gmail.com" }
-        ];
+    function UserService($http) {
 
         var api = {
             createUser   : createUser,
@@ -26,39 +20,32 @@
         return api;
 
         function createUser(user) {
-
+            return $http.post("/api/user", user);
         }
 
         function findUserById(userId) {
-            for(var u in users) {
-                var user = users[u];
-                if(user._id === userId) {
-                    return user;
-                }
-            }
-            return null;
+            var url = "/api/user/" + userId;
+            return $http.get(url);
         }
 
         function findUserByUsername(username) {
-
+            var url = "/api/user?username=" + username;
+            return $http.get(url);
         }
 
         function findUserByCredentials(username, password) {
-            for(var u in users) {
-                var user = users[u];
-                if(user.username === username && user.password === password) {
-                    return user;
-                }
-            }
-            return null;
+            var url = "/api/user?username=" + username + "&password=" + password;
+            return $http.get(url);
         }
 
         function updateUser(userId, user) {
-
+            var url = "/api/user/" + userId;
+            return $http.put(url, user);
         }
 
         function deleteUser(userId) {
-
+            var url = "/api/user/" + userId;
+            return $http.delete(url);
         }
     }
 })();

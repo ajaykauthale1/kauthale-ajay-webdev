@@ -11,8 +11,12 @@
     function WebsiteListController($routeParams, WebsiteService) {
         var vm = this;
         var userId = $routeParams['uid'];
-        vm.websites = WebsiteService.findWebsitesByUser(userId);
         vm.userId = userId;
+        var promise = WebsiteService.findWebsitesByUser(userId);
+        promise
+            .success(function (websites) {
+                vm.websites = websites;
+            });
     }
 
     function EditWebsiteController($location, $routeParams, WebsiteService) {
@@ -22,18 +26,29 @@
         vm.deleteWebsite = deleteWebsite;
         var userId = $routeParams['uid'];
         vm.userId = userId;
-        vm.websites = WebsiteService.findWebsitesByUser(userId);
-        vm.website = WebsiteService.findWebsiteById(vm.websiteId);
+        WebsiteService.findWebsitesByUser(vm.userId)
+            .success(function (websites) {
+                vm.websites = websites;
+            });
+
+        WebsiteService.findWebsiteById(vm.websiteId)
+            .success(function (website) {
+            vm.website = website;
+        });
+
 
         function updateWebsite(website) {
-            WebsiteService.updateWebsite(vm.websiteId, website);
-            $location.url("/user/"+vm.userId+"/website");
+            WebsiteService.updateWebsite(vm.websiteId, website)
+                .success(function () {
+                    $location.url("/user/"+vm.userId+"/website/");
+                });
         }
 
         function deleteWebsite() {
-            WebsiteService.deleteWebsite(vm.websiteId);
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
-            $location.url("/user/"+vm.userId+"/website");
+            WebsiteService.deleteWebsite(vm.websiteId)
+                .success(function () {
+                    $location.url("/user/"+vm.userId+"/website");
+                });
         }
     }
 
@@ -41,13 +56,18 @@
         var vm = this;
         vm.websiteId = $routeParams['wid'];
         vm.createWebsite = createWebsite;
-        vm.userId = $routeParams['uid'];;
-        vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
+        vm.userId = $routeParams['uid'];
+        var promise = WebsiteService.findWebsitesByUser(vm.userId);
+        promise
+            .success(function (websites) {
+                vm.websites = websites;
+            });
 
         function createWebsite(website) {
-            WebsiteService.createWebsite(vm.userId, website);
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
-            $location.url("/user/"+vm.userId+"/website");
+            WebsiteService.createWebsite(vm.userId, website)
+                .success(function () {
+                    $location.url("/user/"+vm.userId+"/website");
+                });
         }
     }
 })();

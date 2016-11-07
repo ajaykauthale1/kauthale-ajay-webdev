@@ -5,24 +5,75 @@
     angular
         .module("WebAppMaker")
         .controller("LoginController", LoginController)
-        .controller("ProfileController", ProfileController);
+        .controller("ProfileController", ProfileController)
+        .controller("RegisterController", RegisterController);
     
     function LoginController($location, UserService) {
         var vm = this;
         vm.login = function (username, password) {
-            var user = UserService.findUserByCredentials(username, password);
-            if(user ==  null) {
-                vm.error = "No such user";
-            } else {
-                $location.url("/user/"+user._id);
-            }
+            UserService.findUserByCredentials(username, password)
+                .success(function (user) {
+                    if(user ==  "0") {
+                        vm.error = "No such user";
+                    } else {
+                        $location.url("/user/"+user._id);
+                    }
+                })
+                .error(function () {
+
+                })
         }
     }
 
-    function ProfileController($routeParams, UserService) {
+    function ProfileController($location, $routeParams, UserService) {
         var vm = this;
         var userId = $routeParams['uid'];
-        var user = UserService.findUserById(userId);
-        vm.user = user;
+
+        vm.updateUser = updateUser;
+        vm.deleteUser = deleteUser;
+
+        function init() {
+            UserService.findUserById(userId)
+                .success(function (user) {
+                    if(user != "0") {
+                        vm.user = user;
+                    }
+                })
+                .error(function () {
+                    
+                })
+        }
+
+        init();
+
+
+        function updateUser() {
+            UserService.updateUser(userId, vm.user);
+        }
+        
+        function deleteUser() {
+            UserService.deleteUser(userId);
+            $location.url('/login');
+        }
+    }
+
+    function RegisterController($location, $routeParams, UserService) {
+        var vm = this;
+        vm.register = register;
+
+        function register(username, password) {
+            var user = {
+                username: username,
+                password: password
+            };
+
+            UserService.createUser(user)
+                .success(function (user) {
+                    $location.url("/user/"+user._id);
+                })
+                .error(function () {
+
+                })
+        }
     }
 })();
