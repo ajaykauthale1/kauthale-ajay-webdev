@@ -12,8 +12,8 @@
         var vm = this;
         var pageId = $routeParams['pid'];
         WidgetService.findWidgetsByPageId(pageId)
-            .success(function (widgets) {
-                vm.widgets = widgets;
+            .success(function (page) {
+                vm.widgets = page.widgets;
             });
         vm.userId = $routeParams['uid'];
         vm.websiteId = $routeParams['wid'];
@@ -68,12 +68,14 @@
         vm.createHeader = createHeader;
         vm.createImage = createImage;
         vm.createYouTube = createYouTube;
+        vm.createHTML = createHTML;
+        vm.createTEXT = createTEXT;
         vm.pageId = $routeParams['pid'];
         vm.userId = $routeParams['uid'];
 
         WidgetService.findWidgetsByPageId(vm.pageId)
-            .success(function (widgets) {
-                vm.widgets = widgets;
+            .success(function (page) {
+                vm.widgets = page.widgets;
             });
 
         function createWidget(widget) {
@@ -95,6 +97,16 @@
 
         function createYouTube() {
             var widget = {"widgetType": "YOUTUBE"};
+            vm.widget = createWidget(widget);
+        }
+
+        function createHTML() {
+            var widget = {"widgetType": "HTML"};
+            vm.widget = createWidget(widget);
+        }
+
+        function createTEXT() {
+            var widget = {"widgetType": "INPUT"};
             vm.widget = createWidget(widget);
         }
     }

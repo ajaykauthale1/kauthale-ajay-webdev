@@ -14,8 +14,8 @@
         vm.userId = userId;
         var promise = WebsiteService.findWebsitesByUser(userId);
         promise
-            .success(function (websites) {
-                vm.websites = websites;
+            .success(function (user) {
+                vm.websites = user.websites;
             });
     }
 
@@ -27,8 +27,8 @@
         var userId = $routeParams['uid'];
         vm.userId = userId;
         WebsiteService.findWebsitesByUser(vm.userId)
-            .success(function (websites) {
-                vm.websites = websites;
+            .success(function (user) {
+                vm.websites = user.websites;
             });
 
         WebsiteService.findWebsiteById(vm.websiteId)
@@ -59,8 +59,8 @@
         vm.userId = $routeParams['uid'];
         var promise = WebsiteService.findWebsitesByUser(vm.userId);
         promise
-            .success(function (websites) {
-                vm.websites = websites;
+            .success(function (user) {
+                vm.websites = user.websites;
             });
 
         function createWebsite(website) {

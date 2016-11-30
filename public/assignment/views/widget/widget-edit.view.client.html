@@ -5,15 +5,13 @@
         </a>
         <a class="navbar-brand page-brand" href="#">Widget Edit</a>
         <p class="navbar-text pull-right">
-            <a class="glyphicon glyphicon-ok page-glyphicon" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget"></a>
+            <a class="glyphicon glyphicon-ok page-glyphicon" ng-click="model.updateWidget(model.widget)"></a>
         </p>
     </div>
     </div>
 </nav>
 <div class="container-fluid">
-    <form>
        <div ng-if="model.widget" ng-include="'views/widget/widget-'+model.widget.widgetType+'.view.client.html'"></div>
-    </form>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom navbar-page">

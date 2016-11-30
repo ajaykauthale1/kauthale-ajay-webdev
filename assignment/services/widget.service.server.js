@@ -1,7 +1,7 @@
 /**
  * Created by Ajay on 10/31/2016.
  */
-module.exports = function (app) {
+module.exports = function (app, model) {
     var widgets = [
         { "_id": "123", "widgetType": "HEADER", "pageId": "321", "size": 2, "text": "GIZMODO"},
         { "_id": "234", "widgetType": "HEADER", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
@@ -43,15 +43,22 @@ module.exports = function (app) {
         var size          = myFile.size;
         var mimetype      = myFile.mimetype;
 
-        var newWidget = { "_id": widgetId, "widgetType": "IMAGE", "pageId": pageId, "width": width,
+        var newWidget = { "_id": widgetId, "widgetType": "IMAGE", "_page": pageId, "width": width,
             "url": "/../assignment/uploads/"+filename, "name": req.body.name,
             "text": req.body.text};
-        for(var w in widgets) {
+
+        /*for(var w in widgets) {
             var widget = widgets[w];
             if(widget._id === widgetId) {
                 widgets[w] = newWidget;
             }
-        }
+        }*/
+
+        model.widgetModel
+            .updateWidget(widgetId, newWidget)
+            .then(function (widgetObj) {
+                console.log("widget updated")
+            });
 
         var url = "/assignment/index.html#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId;
         res.redirect(url);
@@ -59,66 +66,69 @@ module.exports = function (app) {
 
     function createWidget(req, res) {
         var widget = req.body;
-        widget._id = new Date().getTime()+"";
-        widget.pageId = req.params.pageId;
-        widgets.push(widget);
-        res.send(widget);
-        return;
+        var pageId = req.params.pageId;
+        model
+            .widgetModel
+            .createWidget(pageId, widget)
+            .then(function (obj) {
+                model.pageModel
+                    .addWidgetToPage(pageId, obj._id)
+                    .then(function (widgets) {
+                        console.log("Update widgets for page: "+ widgets);
+                    });
+                res.json(obj);
+            });
+
     }
 
     function updateWidget(req, res) {
         var newWidget = req.body;
         var widgetId = req.params['widgetId'];
-        for(var w in widgets) {
-            var widget = widgets[w];
-            if(widget._id === widgetId) {
-                widgets[w] = newWidget;
-            }
-        }
-
-        res.send(200);
+        model.widgetModel
+            .updateWidget(widgetId, newWidget)
+            .then(function (widgetObj) {
+                res.json(widgetObj);
+            });
     }
 
     function deleteWidget(req, res) {
         var widgetId = req.params['widgetId'];
-        for(var w in widgets) {
-            var widget = widgets[w];
-            if(widget._id === widgetId) {
-                widgets.splice(w, 1);
-            }
-        }
-
-        res.send(200);
+        model.widgetModel
+            .deleteWidget(widgetId)
+            .then(function (widget) {
+                res.send(200);
+            });
     }
 
     function findAllWidgetsForPage(req, res) {
         var pageId = req.params.pageId;
-        var result = [];
-        for(var w in widgets) {
-            var widget = widgets[w];
-            if(widget.pageId === pageId) {
-                result.push(widget);
-            }
-        }
-        res.send(result);
+        model.widgetModel
+            .findAllWidgetsForPage(pageId)
+            .then(function (widgets) {
+                res.json(widgets);
+            });
     }
 
     function findWidgetById(req, res) {
         var widgetId = req.params['widgetId'];
-        for(var w in widgets) {
-            var widget = widgets[w];
-            if(widget._id === widgetId) {
-                res.send(widget);
-                return;
-            }
-        }
-
-        res.send("0");
+        model.widgetModel
+            .findWidgetById(widgetId)
+            .then(function (widget) {
+                res.json(widget);
+            });
     }
     
     function updateWidgets(req, res) {
         var start = req.query.initial;
         var end = req.query.final;
-        widgets.splice(end, 0, widgets.splice(start, 1)[0]);
+        var pageId = req.params['pageId'];
+        //widgets.splice(end, 0, widgets.splice(start, 1)[0]);
+
+        model.widgetModel
+            .reorderWidget(pageId, start, end)
+            .then(function (widgets) {
+                //model.pageModel.reorderWidgetsForPage(widgets);
+                res.json(widgets);
+            });
     }
 };

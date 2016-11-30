@@ -12,8 +12,8 @@
         var vm = this;
         var websiteId = $routeParams['wid'];
         PageService.findPageByWebsiteId(websiteId)
-            .success(function (pages) {
-                vm.pages = pages;
+            .success(function (website) {
+                vm.pages = website.pages;
             });
         vm.userId = $routeParams['uid'];
         vm.websiteId = $routeParams['wid'];
@@ -54,8 +54,8 @@
         vm.pageId = $routeParams['pid'];
         vm.userId = $routeParams['uid'];
         PageService.findPageByWebsiteId(vm.websiteId)
-            .success(function (pages) {
-                vm.pages = pages;
+            .success(function (website) {
+                vm.pages = website.pages;
             });
 
         function createPage(page) {

@@ -19,7 +19,7 @@ module.exports = function(app)
 
     var TestSchema = mongoose.Schema({
         message: String
-    });
+    }, {collection: "messages"});
 
     var TestModel = mongoose.model("TestModel", TestSchema);
 
