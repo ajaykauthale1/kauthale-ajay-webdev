@@ -1,0 +1,93 @@
+<script src="./js/autocomplete.js"></script>
+<style>
+    /*
+    Overriding all stylesheets conflicts
+    */
+    .img-fix-height {
+        height:100px;
+        width: 300px;
+    }
+</style>
+
+<nav class="navbar navbar-default navbar-fixed-top navbar-page">
+    <div class="container-fluid">
+        <p class="navbar-text pull-left">
+            <span class="left-margin"></span>
+            <a class="glyphicon glyphicon-home" style="color: grey"  href="#/user_live"></a>
+        </p>
+        <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+            <li class="right-padding">
+                <input type="text" class="typeahead tt-query form-control mobile-menu-top-margin" autocomplete="off" spellcheck="false" id="typeahead"
+                       data-provide="typeahead" placeholder="search friends">
+                <span class="btn btn-info btn-xs"><i class="glyphicon glyphicon-search"></i></span>
+            </li>
+            <li><a href="#/user_live"><i class="fa fa-fw fa-clock-o"></i> <span>Timeline</span></a></li>
+            <li><a href="#/user"><i class="fa fa-fw fa-user"></i> <span>About</span></a></li>
+            <li><a href="#/user_friends"><i class="fa fa-fw fa-users"></i><span> Friends </span><small>({{model.user.friends.length}})</small></a></li>
+            <li class="active"><a href="#/event_list"><i class="fa fa-fw fa-calendar"></i><span> Events </span></a></li>
+            <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+        </ul>
+        <ul class="btn-group cover-menu-mobile hidden-lg hidden-md pull-right mobile-menu-top-margin">
+            <button type="button" class="btn btn-theme btn-sm dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul class="dropdown-menu pull-right no-border" role="menu">
+                <li>
+                    <input type="text" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false" id="typeahead1"
+                           data-provide="typeahead" placeholder="search friends">
+                </li>
+                <li><a href="#user_live"><i class="fa fa-fw fa-clock-o"></i> <span>Timeline</span></a></li>
+                <li><a href="#/user"><i class="fa fa-fw fa-user"></i> <span>About</span></a></li>
+                <li><a href="#/user_friends"><i class="fa fa-fw fa-users"></i><span> Friends </span><small>({{model.user.friends.length}})</small></a></li>
+                <li class="active"><a href="#/event_list"><i class="fa fa-fw fa-calendar"></i><span> Events </span></a></li>
+                <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+            </ul>
+        </ul>
+    </div>
+</nav>
+<div class="container bootstrap top-margin">
+    <div class="clearfix">
+        <span class="text-white h3"><li class="fa fa-calendar"></li>  Events({{model.events.length}})</span>
+        <span class="pull-right hidden-xs hidden-sm">
+            <a href="#/event" class="text-white h5"><i class="fa fa-calendar-plus-o"></i> Add Event</a>
+        </span>
+        <span class="hidden-lg hidden-md pull-right">
+           <br/>
+            <a href="#/event" class="text-white h5"><i class="fa fa-calendar-plus-o"></i> Add Event</a>
+        </span>
+    </div>
+</div>
+<br/>
+<div class="container bootstrap snippets">
+    <div class="row">
+        <div ng-repeat="event in model.events" class="col-md-3">
+            <div class="panel panel-success rounded shadow">
+                <div class="panel-heading no-border"  style="background-color: #BBD7ED">
+                    <div class="pull-left half">
+                        <div class="media">
+                            <div class="media-object">
+                                <img ng-show="event.photoUrl" src="{{event.photoUrl}}" alt="..." class="img-thumbnail img-fix-height">
+                            </div>
+                            <br/>
+                            <div class="media-body">
+                                <a href="#/event/{{event._id}}" class="media-heading block mb-0 h4 text-white"><b>{{event.name}}</b></a>
+                                <a target="_blank" href="http://www.google.com/maps/place/{{event.location}}" class="text-white h2 pull-right"><i class="fa fa-map-marker"></i></a>
+                                <br/>
+                                <span class="text-white h6">On <b>{{event.dateOfEvent}}</b> at {{event.time}}</span>
+                                <br/>
+                                <span class="text-white h6">People Attending ({{event.attendees.length}})</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="clearfix"></div>
+                </div><!-- /.panel-heading -->
+                <div class="panel-footer">
+                    <a href="#/event/{{event._id}}" class="text-white h6"><i class="fa fa-calendar-o"></i> Update</a>
+                    <span class="left-margin"></span>
+                    <a ng-click="model.removeEvent(event._id)" class="text-white h6 btn-orange"><i class="fa fa-calendar-times-o"></i> Remove</a>
+                </div><!-- /.panel-footer -->
+            </div><!-- /.panel -->
+        </div>
+    </div>
+</div>

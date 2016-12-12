@@ -7,6 +7,8 @@ module.exports = function () {
     var api = {
         createUser: createUser,
         findUserById: findUserById,
+        findUserByGoogleId: findUserByGoogleId,
+        findUserByFacebookId: findUserByFacebookId,
         findUserByUsername: findUserByUsername,
         findUserByCredentials: findUserByCredentials,
         updateUser: updateUser,
@@ -23,6 +25,16 @@ module.exports = function () {
         model = _model;
     }
 
+    function findUserByGoogleId(googleId) {
+        return UserModel
+            .findOne({"google.id": googleId});
+    }
+
+    function findUserByFacebookId(facebookId) {
+        return UserModel
+            .findOne({"facebook.id": facebookId});
+    }
+
     function createUser(user) {
         return UserModel.create(user);
     }
@@ -32,11 +44,11 @@ module.exports = function () {
     }
 
     function findUserByCredentials(username, password) {
-        return UserModel.find({username: username,password: password});
+        return UserModel.findOne({username: username,password: password});
     }
 
     function findUserByUsername(username) {
-        return UserModel.find({username: username});
+        return UserModel.findOne({username: username});
     }
 
     function updateUser(userId, user) {

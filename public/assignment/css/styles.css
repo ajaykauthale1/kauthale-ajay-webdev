@@ -139,3 +139,12 @@ body {
 .new-ta-scroll-height {
     height: 300px;
 }
+
+.error {
+    color: red;
+}
+
+.button-link {
+    background-color: transparent;
+    border: none;
+}

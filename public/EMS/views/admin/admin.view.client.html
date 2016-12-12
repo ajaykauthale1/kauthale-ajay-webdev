@@ -1,0 +1,70 @@
+<script src="./js/autocomplete.js"></script>
+<style>
+    /*
+    Overriding all stylesheets conflicts
+    */
+    .img-fix-height {
+        height:100px;
+        width: 300px;
+    }
+</style>
+
+<nav class="navbar navbar-default navbar-fixed-top navbar-page">
+    <div class="container-fluid">
+        <p class="navbar-text pull-left">
+            <span class="left-margin"></span>
+            <a class="glyphicon glyphicon-home" style="color: grey"  href="#/user_live"></a>
+        </p>
+        <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+            <li class="right-padding">
+                <input type="text" class="typeahead tt-query form-control mobile-menu-top-margin" autocomplete="off" spellcheck="false" id="typeahead"
+                       data-provide="typeahead" placeholder="search users">
+                <span class="btn btn-info btn-xs"><i class="glyphicon glyphicon-search"></i></span>
+            </li>
+            <li class="active"><a href="#/admin"><i class="fa fa-fw fa-cog"></i> <span>Manage</span></a></li>
+            <li><a href="#/users"><i class="fa fa-fw fa-users"></i><span> Users </span><small>({{model.users.length}})</small></a></li>
+            <li><a href="#/events"><i class="fa fa-fw fa-calendar"></i><span> Events <small>({{model.events.length}})</small></span></a></li>
+            <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+        </ul>
+        <ul class="btn-group cover-menu-mobile hidden-lg hidden-md pull-right mobile-menu-top-margin">
+            <button type="button" class="btn btn-theme btn-sm dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul class="dropdown-menu pull-right no-border" role="menu">
+                <li>
+                    <input type="text" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false" id="typeahead1"
+                           data-provide="typeahead" placeholder="search users">
+                </li>
+                <li class="active"><a href="#/admin"><i class="fa fa-fw fa-cog"></i> <span>Manage</span></a></li>
+                <li><a href="#/users"><i class="fa fa-fw fa-users"></i><span> Users </span><small>({{model.users.length}})</small></a></li>
+                <li><a href="#/events"><i class="fa fa-fw fa-calendar"></i><span> Events ({{model.events.length}})</span></a></li>
+                <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+            </ul>
+        </ul>
+    </div>
+</nav>
+<br/>
+<div id="adminbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">Manage</div>
+        </div>
+        <div class="panel-body" >
+            <form id="signupform" class="form-horizontal" role="form">
+
+                <div id="signupalert" style="display:none" class="alert alert-danger">
+                    <p>Error:</p>
+                    <span></span>
+                </div>
+
+                <div class="clearfix">
+                    <a href="#/users" class="text-white h3"><li class="fa fa-users"></li>  Total users({{model.users.length}})</a>
+                </div>
+
+                <div class="clearfix top-margin">
+                    <a href="#/events" class="text-white h3"><li class="fa fa-fw fa-calendar"></li>  Total Events({{model.events.length}})</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

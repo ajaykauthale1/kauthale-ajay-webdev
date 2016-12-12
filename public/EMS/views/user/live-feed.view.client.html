@@ -1,0 +1,135 @@
+<script src="./js/autocomplete.js"></script>
+<style>
+    /*
+    Overriding all stylesheets conflicts
+    */
+    .img-fix-height {
+        height:100px;
+        width: 400px;
+    }
+</style>
+
+<nav class="navbar navbar-default navbar-fixed-top navbar-page">
+    <div class="container-fluid">
+        <p class="navbar-text pull-left">
+            <span class="left-margin"></span>
+            <a class="glyphicon glyphicon-home" style="color: grey"  href="#/user_live"></a>
+        </p>
+        <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+            <li class="right-padding">
+                <input type="text" class="typeahead tt-query form-control mobile-menu-top-margin" autocomplete="off" spellcheck="false" id="typeahead"
+                       data-provide="typeahead" placeholder="search friends">
+                <span class="btn btn-info btn-xs"><i class="glyphicon glyphicon-search"></i></span>
+            </li>
+            <li class="active"><a href=""><i class="fa fa-fw fa-clock-o"></i> <span>Timeline</span></a></li>
+            <li><a href="#/user"><i class="fa fa-fw fa-user"></i> <span>About</span></a></li>
+            <li><a href="#/user_friends"><i class="fa fa-fw fa-users"></i><span> Friends </span><small>({{model.user.friends.length}})</small></a></li>
+            <li><a href="#/event_list"><i class="fa fa-fw fa-calendar"></i><span> Events </span></a></li>
+            <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+        </ul>
+        <ul class="btn-group cover-menu-mobile hidden-lg hidden-md pull-right mobile-menu-top-margin">
+           <button type="button" class="btn btn-theme btn-sm dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul class="dropdown-menu pull-right no-border" role="menu">
+                <li>
+                    <input type="text" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false" id="typeahead1"
+                       data-provide="typeahead" placeholder="search friends">
+                </li>
+                <li class="active navbar-acive"><a href=""><i class="fa fa-fw fa-clock-o"></i> <span>Timeline</span></a></li>
+                <li><a href="#/user"><i class="fa fa-fw fa-user"></i> <span>About</span></a></li>
+                <li><a href="#/user_friends"><i class="fa fa-fw fa-users"></i><span> Friends </span><small>({{model.user.friends.length}})</small></a></li>
+                <li><a href="#/event_list"><i class="fa fa-fw fa-calendar"></i><span> Events </span></a></li>
+                <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+            </ul>
+        </ul>
+    </div>
+</nav>
+
+<div class="container bootstrap snippets top-margin">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-4">
+            <div class="panel rounded shadow">
+                <div class="panel-body">
+                    <div class="inner-all">
+                        <ul class="list-unstyled">
+                            <li class="text-center">
+                                <img ng-src="{{model.user.photoUrl}}" width="215" height="230" class="avatar img-circle img-thumbnail" alt="avatar">
+                            </li>
+                            <li class="text-center">
+                                <h4 class="text-capitalize">{{model.user.username}}</h4>
+                                <p class="text-muted text-capitalize">{{model.user.occupation}}</p>
+                            </li>
+                            <li><br></li>
+                            <li>
+                                <div class="btn-group-vertical btn-block">
+                                    <a ng-click="model.edit()" class="btn btn-default"><i class="fa fa-cog pull-right"></i>Edit Account</a>
+                                    <a ng-click="model.logout()" class="btn btn-default"><i class="fa fa-sign-out pull-right"></i>Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- /.panel -->
+
+            <div class="panel panel-theme rounded shadow">
+                <div class="panel-body no-padding rounded">
+                    <ul class="list-group no-margin">
+                        <li class="list-group-item"><i class="fa fa-envelope mr-5"></i>{{model.user.email}}</li>
+                        <li class="list-group-item"><i class="fa fa-phone mr-5"></i>{{model.user.phone}}</li>
+                    </ul>
+                </div><!-- /.panel-body -->
+            </div><!-- /.panel -->
+
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-8">
+            <div class="row">
+                <div class="col-md-6" ng-repeat="event in model.events">
+                    <div class="panel panel-success rounded shadow">
+                        <div class="panel-heading no-border">
+                            <div class="pull-left">
+                                <div class="media">
+                                    <div class="media-object pull-left">
+                                        <img src="{{event.creator[0].photoUrl}}" alt="..." class="img-circle img-post img-responsive">
+                                    </div>
+                                    <div class="media-body">
+                                        <a href="#/user/{{event.creator[0]._id}}" class="media-heading block mb-0 h4 text-white">{{event.creator[0].firstName}} {{event.creator[0].lastName}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <span class="text-white h6 left-margin">created on {{event.dateCreated}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body no-padding feed-box">
+                            <div class="media">
+                                <div class="media-object">
+                                    <img ng-show="event.photoUrl" src="{{event.photoUrl}}" alt="..." class="img-thumbnail img-fix-height">
+                                </div>
+                                <br/>
+                                <div class="media-body">
+                                    <a href="#/event/{{event._id}}" class="media-heading block mb-0 h4 text-white"><b>{{event.name}}</b></a>
+                                    <a target="_blank" href="http://www.google.com/maps/place/{{event.location}}" class="text-white h2 pull-right"><i class="fa fa-map-marker"></i></a>
+                                    <br/>
+                                    <span class="text-white h6">On <b>{{event.dateOfEvent}}</b> at {{event.time}}</span>
+                                    <br/>
+                                    <span class="text-white h6">People Attending ({{event.attendees.length}})</span>
+                                </div>
+                            </div>
+                            <div ng-show="event.attending" class="media-body">
+                                <span class="text-white h5"><i class="fa fa-calendar-check-o"></i> Attending</span>
+                                <span class="left-margin"></span>
+                                <a class="text-white h5" ng-click="model.removeEventFromUser(event._id)"><i class="fa fa-calendar-times-o"></i>  Remove Event</a>
+                            </div>
+                            <div ng-hide="event.attending" class="media-body">
+                                <a class="text-white h5" ng-click="model.addEventToUser(event._id)"><i class="fa fa-calendar-plus-o"></i> Attend event</a>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

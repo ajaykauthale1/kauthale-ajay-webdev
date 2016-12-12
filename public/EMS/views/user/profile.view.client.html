@@ -1,0 +1,257 @@
+<script src="./js/autocomplete.js"></script>
+<nav ng-show="model.isAdmin" class="navbar navbar-default navbar-fixed-top navbar-page">
+    <div class="container-fluid">
+        <p class="navbar-text pull-left">
+            <span class="left-margin"></span>
+            <a class="glyphicon glyphicon-home" style="color: grey"  href="#/user_live"></a>
+        </p>
+        <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+            <li class="right-padding">
+                <input type="text" class="typeahead tt-query form-control mobile-menu-top-margin" autocomplete="off" spellcheck="false" id="typeahead2"
+                       data-provide="typeahead" placeholder="search users">
+                <span class="btn btn-info btn-xs"><i class="glyphicon glyphicon-search"></i></span>
+            </li>
+            <li><a href="#/admin"><i class="fa fa-fw fa-cog"></i> <span>Manage</span></a></li>
+            <li class="active"><a href="#/users"><i class="fa fa-fw fa-users"></i><span> Users </span><small>({{model.users.length}})</small></a></li>
+            <li><a href="#/events"><i class="fa fa-fw fa-calendar"></i><span> Events <small>({{model.events.length}})</small></span></a></li>
+            <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+        </ul>
+        <ul class="btn-group cover-menu-mobile hidden-lg hidden-md pull-right mobile-menu-top-margin">
+            <button type="button" class="btn btn-theme btn-sm dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul class="dropdown-menu pull-right no-border" role="menu">
+                <li>
+                    <input type="text" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false" id="typeahead1"
+                           data-provide="typeahead" placeholder="search users">
+                </li>
+                <li class="active"><a href="#/admin"><i class="fa fa-fw fa-cog"></i> <span>Manage</span></a></li>
+                <li><a href="#/users"><i class="fa fa-fw fa-users"></i><span> Users </span><small>({{model.users.length}})</small></a></li>
+                <li><a href="#/events"><i class="fa fa-fw fa-calendar"></i><span> Events ({{model.events.length}})</span></a></li>
+                <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+            </ul>
+        </ul>
+    </div>
+</nav>
+
+<nav ng-hide="model.isAdmin" class="navbar navbar-default navbar-fixed-top navbar-page">
+    <div class="container-fluid">
+        <p class="navbar-text pull-left">
+            <span class="left-margin"></span>
+            <a class="glyphicon glyphicon-home" style="color: grey"  href="#/user_live"></a>
+        </p>
+        <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+            <li class="right-padding">
+                <input type="text" class="typeahead tt-query form-control mobile-menu-top-margin" autocomplete="off" spellcheck="false" id="typeahead"
+                       data-provide="typeahead" placeholder="search friends">
+                <span class="btn btn-info btn-xs"><i class="glyphicon glyphicon-search"></i></span>
+            </li>
+            <li><a href="#/user_live"><i class="fa fa-fw fa-clock-o"></i> <span>Timeline</span></a></li>
+            <li class="active"><a href="#/user"><i class="fa fa-fw fa-user"></i> <span>About</span></a></li>
+            <li><a href="#/user_friends"><i class="fa fa-fw fa-users"></i><span> Friends </span><small>({{model.user.friends.length}})</small></a></li>
+            <li><a href="#/event_list"><i class="fa fa-fw fa-calendar"></i><span> Events </span></a></li>
+            <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+        </ul>
+        <ul class="btn-group cover-menu-mobile hidden-lg hidden-md pull-right mobile-menu-top-margin">
+            <button type="button" class="btn btn-theme btn-sm dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul class="dropdown-menu pull-right no-border" role="menu">
+                <li>
+                    <input type="text" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false" id="typeahead1"
+                           data-provide="typeahead" placeholder="search friends">
+                </li>
+                <li><a href="#/user_live"><i class="fa fa-fw fa-clock-o"></i> <span>Timeline</span></a></li>
+                <li class="active"><a href="#/user"><i class="fa fa-fw fa-user"></i> <span>About</span></a></li>
+                <li><a href="#/user_friends"><i class="fa fa-fw fa-users"></i><span> Friends </span><small>({{model.user.friends.length}})</small></a></li>
+                <li><a href="#/event_list"><i class="fa fa-fw fa-calendar"></i><span> Events </span></a></li>
+                <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+            </ul>
+        </ul>
+    </div>
+</nav>
+
+<div ng-show="model.loggenInUser" class="container bootstrap snippets top-margin">
+    <div class="row center-align">
+        <div ng-show="model.message" class="alert alert-info alert-dismissable">
+            <a  class="panel-close close" data-dismiss="alert">×</a>
+            <i class="fa fa-coffee"></i>
+            {{model.message}}
+        </div>
+        <h3>Update Profile</h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-4">
+            <div class="panel rounded shadow">
+                <div class="panel-body">
+                    <div class="inner-all">
+                        <ul class="list-unstyled">
+                            <li class="text-center">
+                                <form action="/api/uploads"  method="post" enctype="multipart/form-data" name="imageForm" novalidate>
+                                    <img ng-src="{{model.user.photoUrl}}" width="215" height="230" class="avatar img-circle img-thumbnail" alt="avatar">
+                                    <h6>Upload a different photo...</h6>
+                                    <span class="left-margin"></span><input name="myFile" id="upload" type="file">
+                                    <br/>
+                                    <button type="submit" class="btn btn-primary">Update Photo</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-6 col-xs-12">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">First name:</label>
+                    <div class="col-lg-8">
+                        <input id="firstname" ng-model="model.user.firstName" type="text" class="form-control" name="firstname" placeholder="First Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Last name:</label>
+                    <div class="col-lg-8">
+                        <input id="lastname" ng-model="model.user.lastName" type="text" class="form-control" name="lastname" placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Occupation:</label>
+                    <div class="col-lg-8">
+                        <input id="occupation" ng-model="model.user.occupation" type="text" class="form-control" name="occupation" placeholder="Occupation">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Email:</label>
+                    <div class="col-lg-8">
+                        <input id="email" ng-model="model.user.email" type="text" class="form-control" name="email" placeholder="email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Phone:</label>
+                    <div class="col-lg-8">
+                        <input id="phone" ng-model="model.user.phone" type="text" class="form-control" name="phone" placeholder="phone">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Username:</label>
+                    <div class="col-md-8">
+                        <input id="username" ng-model="model.user.username" type="text" class="form-control" name="username" placeholder="username">
+                    </div>
+                </div>
+                <!--<div class="form-group">
+                    <label class="col-md-3 control-label">Role:</label>
+                    <div class="col-md-8">
+                        <input id="role" ng-model="model.user.role" type="text" class="form-control" name="username" placeholder="username">
+                    </div>
+                </div>-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Password:</label>
+                    <div class="col-md-8">
+                        <input id="password" ng-model="model.user.password" type="password" class="form-control" name="passwd" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Confirm password:</label>
+                    <div class="col-md-8">
+                        <input id="vpassword" type="password" class="form-control" name="passwd" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8">
+                        <a ng-click="model.updateUser()" id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Save Changes</a>
+                        <span class="left-margin"></span>
+                        <a href="#/user_live" id="btn-back" type="button" class="btn btn-danger"><i class="icon-hand-right"></i> &nbsp Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div ng-hide="model.loggenInUser" class="container bootstrap snippets top-margin">
+    <div class="row center-align">
+        <div ng-show="model.message" class="alert alert-info alert-dismissable">
+            <a  class="panel-close close" data-dismiss="alert">×</a>
+            <i class="fa fa-coffee"></i>
+            {{model.message}}
+        </div>
+        <div ng-show="model.alreadyRequested" class="alert alert-info">
+            <i class="fa fa-coffee"></i>
+            <span>Friend Request is already sent and waiting for approval.</span>
+        </div>
+        <h3>Profile</h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-4">
+            <div class="panel rounded shadow">
+                <div class="panel-body">
+                    <div class="inner-all">
+                        <ul class="list-unstyled">
+                            <li class="text-center">
+                                <img ng-src="{{model.user.photoUrl}}" width="215" height="230" class="avatar img-circle img-thumbnail" alt="avatar">
+                                <span ng-show="model.connectedOn"><h6 ng-hide="model.isAdmin">Friend since {{model.connectedOn}}</h6></span>
+                                <h6 ng-show="model.isAdmin">Joined on {{model.user.dateCreated}}</h6>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">First name:</label>
+                    <div class="col-lg-8">
+                        <h5 class="">{{model.user.firstName}}</h5>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Last name:</label>
+                    <div class="col-lg-8">
+                        {{model.user.lastName}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Occupation:</label>
+                    <div class="col-lg-8">
+                        {{model.user.occupation}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Email:</label>
+                    <div class="col-lg-8">
+                        {{model.user.email}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Phone:</label>
+                    <div class="col-lg-8">
+                        {{model.user.phone}}
+                    </div>
+                </div>
+                <div class="form-group bottom-margin">
+                    <label class="col-md-3 control-label">Username:</label>
+                    <div class="col-md-8">
+                        {{model.user.username}}
+                    </div>
+                </div>
+                <div ng-hide="model.isAdmin" class="form-group left-margin">
+                    <div ng-hide="model.alreadyRequested" class="col-md-8">
+                        <a ng-hide="model.alreadyFriends" class="btn btn-info" ng-click="model.addFriend()"><i class="fa fa-user-plus">  Add Friend</i></a>
+                        <a ng-show="model.alreadyFriends" ng-click="model.removeFriend()" class="btn btn-warning"><i class="fa fa-user-times"></i> Remove</a>
+                        <span class="left-margin"></span>
+                        <a href="#/user_live" id="btn-back1" type="button" class="btn btn-danger"><i class="icon-hand-right"></i> &nbsp Cancel</a>
+                    </div>
+                </div>
+                <div ng-show="model.isAdmin" class="form-group left-margin">
+                    <div class="col-md-8">
+                        <span class="left-margin"></span>
+                        <a ng-click="model.removeUser(model.user._id)" class="btn btn-danger"><i class="fa fa-user-times"></i> Remove</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+ </div>

@@ -15,7 +15,7 @@
             </a>
             <a class="navbar-brand" href="#">New Website</a>
             <p class="navbar-text pull-right">
-                <a class="glyphicon glyphicon-ok" ng-click="model.createWebsite(model.website)"></a>
+                <a type="button" class="glyphicon glyphicon-ok" ng-click="model.createWebsite(model.website)"></a>
             </p>
         </div>
     </div>
@@ -39,12 +39,27 @@
         </form>
     </div>
     <div class="col-sm-8">
-        <form>
+        <form novalidate name="websiteForm">
+            <div ng-show="websiteForm.$invalid && websiteForm.$submitted" class="alert alert-danger" role="alert">
+                There were errors in your form.
+                <ul>
+                    <li ng-show="websiteForm.name.$invalid">Website name is required</li>
+                </ul>
+            </div>
+            <div ng-show="model.error && !websiteForm.$submitted" class="alert alert-danger" role="alert">
+                There were errors in your form.
+                <ul>
+                    <li>Website name is required</li>
+                </ul>
+            </div>
             <div class="form-group">
                 <label for="name">Name</label>
-                <input ng-model="model.website.name" type="text" class="form-control margin-bottom" id="name" placeholder="Name"/>
+                <input name="name" ng-model="model.website.name" type="text" class="form-control margin-bottom" id="name" placeholder="Name" required/>
+                <div ng-show="websiteForm.name.$invalid && websiteForm.$submitted" class="error">Website name is required</div>
+                <div ng-show="model.error && !websiteForm.$submitted" class="error">Website name is required</div>
                 <label for="desc">Description</label>
                 <textarea ng-model="model.website.description" class="form-control margin-bottom" rows="7" id="desc" placeholder="Description"></textarea>
+                <button ng-click="model.createWebsite(model.website)" type="submit" class="btn btn-primary btn-block">Create</button>
             </div>
         </form>
     </div>

@@ -12,11 +12,23 @@
 </nav>
 
 <div class="container-fluid">
-    <form>
-    </form>
     <form action="/api/uploads"  method="post" enctype="multipart/form-data" name="imageForm" novalidate>
+        <div ng-show="imageForm.$invalid && imageForm.$submitted" class="alert alert-danger" role="alert">
+            There were errors in your form.
+            <ul>
+                <li ng-show="imageForm.name.$invalid">Widget name is required</li>
+            </ul>
+        </div>
+        <div ng-show="model.error && !imageForm.$submitted" class="alert alert-danger" role="alert">
+            There were errors in your form.
+            <ul>
+                <li>Widget name is required</li>
+            </ul>
+        </div>
         <label for="name">Name</label>
-        <input ng-model="model.widget.name" name="name" type="text" class="form-control margin-bottom" id="name" placeholder="Name"/>
+        <input name="name" ng-model="model.widget.name" name="name" type="text" class="form-control margin-bottom" id="name" placeholder="Name" required/>
+        <div ng-show="imageForm.name.$invalid && imageForm.$submitted" class="error">Widget name is required</div>
+        <div ng-show="model.error && !imageForm.$submitted" class="error">Widget name is required</div>
         <label for="text">Text</label>
         <input name="text" ng-model="model.widget.text" type="text" class="form-control margin-bottom" id="text" placeholder="Text"/>
         <label for="url">URL</label>

@@ -11,8 +11,10 @@
     function LoginController($location, UserService) {
         var vm = this;
         vm.login = function (username, password) {
-            UserService.findUserByCredentials(username, password)
-                .success(function (user) {
+            //UserService.findUserByCredentials(username, password)
+            var promise = UserService.login(username, password);
+               promise
+                    .success(function (user) {
                     if(user ==  "0") {
                         vm.error = "No such user";
                     } else {
@@ -27,13 +29,16 @@
 
     function ProfileController($location, $routeParams, UserService) {
         var vm = this;
-        var userId = $routeParams['uid'];
+        //var userId = $routeParams['uid'];
 
         vm.updateUser = updateUser;
         vm.deleteUser = deleteUser;
+        vm.logout = logout;
 
         function init() {
-            UserService.findUserById(userId)
+            UserService
+                //.findUserById(userId)
+                .findCurrentUser()
                 .success(function (user) {
                     if(user != "0") {
                         vm.user = user;
@@ -46,13 +51,17 @@
 
         init();
 
+        function logout() {
+            UserService.logout();
+            $location.url("/login");
+        }
 
         function updateUser() {
-            UserService.updateUser(userId, vm.user);
+            UserService.updateUser(vm.user._id, vm.user);
         }
         
         function deleteUser() {
-            UserService.deleteUser(userId);
+            UserService.deleteUser(vm.user._id);
             $location.url('/login');
         }
     }
@@ -67,9 +76,25 @@
                 password: password
             };
 
+            if(password != vm.password2) {
+                vm.error = true;
+                return;
+            }
+
             UserService.createUser(user)
                 .success(function (user) {
-                    $location.url("/user/"+user._id);
+                    var promise = UserService.login(username, password);
+                    promise
+                        .success(function (user) {
+                            if(user ==  "0") {
+                                vm.error = "No such user";
+                            } else {
+                                $location.url("/user/"+user._id);
+                            }
+                        })
+                        .error(function () {
+
+                        })
                 })
                 .error(function () {
 

@@ -1,0 +1,143 @@
+<script src="./js/autocomplete.js"></script>
+
+<nav class="navbar navbar-default navbar-fixed-top navbar-page">
+    <div class="container-fluid">
+        <p class="navbar-text pull-left">
+            <span class="left-margin"></span>
+            <a class="glyphicon glyphicon-home" style="color: grey"  href="#/user_live"></a>
+        </p>
+        <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+            <li class="right-padding">
+                <input type="text" class="typeahead tt-query form-control mobile-menu-top-margin" autocomplete="off" spellcheck="false" id="typeahead"
+                       data-provide="typeahead" placeholder="search friends">
+                <span class="btn btn-info btn-xs"><i class="glyphicon glyphicon-search"></i></span>
+            </li>
+            <li><a href="#/user_live"><i class="fa fa-fw fa-clock-o"></i> <span>Timeline</span></a></li>
+            <li><a href="#/user"><i class="fa fa-fw fa-user"></i> <span>About</span></a></li>
+            <li><a href="#/user_friends"><i class="fa fa-fw fa-users"></i><span> Friends </span><small>({{model.user.friends.length}})</small></a></li>
+            <li class="active"><a href="#/event_list"><i class="fa fa-fw fa-calendar"></i><span> Events </span></a></li>
+            <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+        </ul>
+        <ul class="btn-group cover-menu-mobile hidden-lg hidden-md pull-right mobile-menu-top-margin">
+            <button type="button" class="btn btn-theme btn-sm dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul class="dropdown-menu pull-right no-border" role="menu">
+                <li>
+                    <input type="text" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false" id="typeahead1"
+                           data-provide="typeahead" placeholder="search friends">
+                </li>
+                <li><a href="#/user_live"><i class="fa fa-fw fa-clock-o"></i> <span>Timeline</span></a></li>
+                <li><a href="#/user"><i class="fa fa-fw fa-user"></i> <span>About</span></a></li>
+                <li><a href="#/user_friends"><i class="fa fa-fw fa-users"></i><span> Friends </span><small>({{model.user.friends.length}})</small></a></li>
+                <li class="active"><a href="#/event_list"><i class="fa fa-fw fa-calendar"></i><span> Events </span></a></li>
+                <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+            </ul>
+        </ul>
+    </div>
+</nav>
+<div id="eventBox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">Event</div>
+        </div>
+        <div class="panel-body" >
+            <form action="/api/eventUpload" class="form-horizontal"  method="post" enctype="multipart/form-data" name="imageForm" novalidate>
+                <div class="form-group">
+                    <label for="name" class="col-md-3 control-label">Photo</label>
+                    <div class="col-md-9">
+                        <img ng-show="model.event.photoUrl" ng-src="{{model.event.photoUrl}}"  class="avatar img-responsive" alt="avatar">
+                        <img ng-hide="model.event.photoUrl" src="http://drpatbaccili.com/wp-content/uploads/2014/04/placeholder.png" class="avatar img-responsive">
+                        <br/>
+                        <h6 ng-show="model.creatorLoggedIn">Upload a different photo...</h6>
+                        <input  name="evtId" value="{{model.event._id}}"   style="display: none"/>
+                        <span  class="left-margin"></span><input ng-show="model.creatorLoggedIn" name="myFile" id="upload" type="file">
+                        <br/>
+                        <button ng-show="model.creatorLoggedIn" type="submit" class="btn btn-info">Update Photo</button>
+                    </div>
+                </div>
+            </form>
+
+            <form id="eventform" class="form-horizontal" role="form">
+
+                <div id="eventalert" style="display:none" class="alert alert-danger">
+                    <p>Error:</p>
+                    <span></span>
+                </div>
+
+                <div class="form-group" ng-show="model.creatorLoggedIn">
+                    <label for="name" class="col-md-3 control-label">Event Name</label>
+                    <div class="col-md-9">
+                        <input id="name" ng-model="model.event.name" type="text" class="form-control" name="name" placeholder="Event Name">
+                    </div>
+                </div>
+                <div class="form-group" ng-hide="model.creatorLoggedIn">
+                    <label for="name1" class="col-md-3 control-label">Event Name</label>
+                    <div class="col-md-9">
+                        <input id="name1" ng-model="model.event.name" type="text" class="form-control" name="name" placeholder="Event Name" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="model.creatorLoggedIn">
+                    <label for="location" class="col-md-3 control-label">Location</label>
+                    <div class="col-md-9">
+                        <input id="location" ng-model="model.event.location" type="text" class="form-control" name="location" placeholder="Location">
+                    </div>
+                </div>
+                <div class="form-group" ng-hide="model.creatorLoggedIn">
+                    <label for="location1" class="col-md-3 control-label">Location</label>
+                    <div class="col-md-9">
+                        <input id="location1" ng-model="model.event.location" type="text" class="form-control" name="location1" placeholder="Location" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="model.creatorLoggedIn">
+                    <label for="datetimepicker" class="col-md-3 control-label">Date/Time</label>
+                    <div class="col-md-9">
+                        <input class="calender" ng-model="model.event.dateOfEvent" type="text" id="datetimepicker"><i class="fa fa-fw fa-calendar"></i>
+                        <input class="calender" ng-model="model.event.time" type="text" id="timepicker"><i class="fa fa-fw fa-clock-o"></i>
+                    </div>
+                </div>
+                <div class="form-group"ng-hide="model.creatorLoggedIn">
+                    <label for="datetimepicker1" class="col-md-3 control-label">Date/Time</label>
+                    <div class="col-md-9">
+                        <input class="calender" ng-model="model.event.dateOfEvent" type="text" id="datetimepicker1" readonly><i class="fa fa-fw fa-calendar"></i>
+                        <input class="calender" ng-model="model.event.time" type="text" id="timepicker1" readonly><i class="fa fa-fw fa-clock-o"></i>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="model.creatorLoggedIn">
+                    <label for="description" class="col-md-3 control-label">Description</label>
+                    <div class="col-md-9">
+                        <textarea id="description" ng-model="model.event.description" class="form-control" name="description" placeholder="Add Description"></textarea>
+                    </div>
+                </div>
+                <div class="form-group" ng-hide="model.creatorLoggedIn">
+                    <label for="description1" class="col-md-3 control-label">Description</label>
+                    <div class="col-md-9">
+                        <textarea id="description1" ng-model="model.event.description" class="form-control" name="description" placeholder="Add Description" readonly></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <!-- Button -->
+                    <div class="col-md-offset-3 col-md-9" ng-show="model.creatorLoggedIn">
+                        <a ng-show="model.event._id" ng-click="model.updateEvent(model.event)" id="btn-update" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Update Event</a>
+                        <a ng-hide="model.event._id" ng-click="model.createEvent(model.event)" id="btn-add" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Add Event</a>
+                    </div>
+                </div>
+                <div class="form-group" ng-hide="model.creatorLoggedIn">
+                    <!-- Button -->
+                    <div ng-hide="model.isAdmin" class="col-md-offset-3 col-md-9" ng-show="model.attending">
+                        <span class="text-white h5"><i class="fa fa-calendar-check-o"></i> You are attending</span>
+                        <span class="left-margin"></span>
+                        <a class="text-white h5" ng-click="model.removeEventFromUser(event._id)"><i class="fa fa-calendar-times-o"></i>  Cancel Event</a>
+                    </div>
+                    <div ng-hide="model.isAdmin" class="col-md-offset-3 col-md-9" ng-hide="model.attending">
+                        <a class="text-white h5" ng-click="model.addEventToUser(event._id)"><i class="fa fa-calendar-plus-o"></i> Attend event</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

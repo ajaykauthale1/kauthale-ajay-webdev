@@ -21,8 +21,9 @@
         </div>
 
         <a href="#/user/{{model.user._id}}/website" type="button" class="btn btn-primary btn-block">Websites</a>
-        <a href="#/login" type="button" class="btn btn-danger btn-block">Logout</a>
+        <a ng-click="model.logout()" type="button" class="btn btn-danger btn-block">Logout</a>
         <a ng-click="model.deleteUser()" type="button" class="btn btn-warning btn-block">Unregister</a>
+        <a href="#admin" ng-show="model.user.role == 'ADMIN'" type="button" class="btn btn-warning btn-block">Admin</a>
     </form>
 </div>
 

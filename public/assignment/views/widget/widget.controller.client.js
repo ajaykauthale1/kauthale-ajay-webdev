@@ -47,6 +47,15 @@
             });
 
         function updateWidget(widget) {
+            if(widget == undefined || widget.name == undefined || widget.name == "") {
+                vm.error = true;
+                if(widget.widgetType == 'HTML' || widget.widgetType == 'INPUT') {
+                    vm.error = false;
+                } else {
+                    return;
+                }
+            }
+
             WidgetService.updateWidget(vm.widgetId, widget)
                 .success(function () {
                     $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
@@ -79,7 +88,7 @@
             });
 
         function createWidget(widget) {
-            WidgetService.createWidget(vm.pageId, widget)
+           WidgetService.createWidget(vm.pageId, widget)
                 .success(function (wd) {
                     $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+wd._id);
                 });

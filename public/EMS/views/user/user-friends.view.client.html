@@ -1,0 +1,85 @@
+<script src="./js/autocomplete.js"></script>
+
+<nav class="navbar navbar-default navbar-fixed-top navbar-page">
+    <div class="container-fluid">
+        <p class="navbar-text pull-left">
+            <span class="left-margin"></span>
+            <a class="glyphicon glyphicon-home" style="color: grey"  href="#/user_live"></a>
+        </p>
+        <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+            <li class="right-padding">
+                <input type="text" class="typeahead tt-query form-control mobile-menu-top-margin" autocomplete="off" spellcheck="false" id="typeahead"
+                       data-provide="typeahead" placeholder="search friends">
+                <span class="btn btn-info btn-xs"><i class="glyphicon glyphicon-search"></i></span>
+            </li>
+            <li><a href="#/user_live"><i class="fa fa-fw fa-clock-o"></i> <span>Timeline</span></a></li>
+            <li><a href="#/user"><i class="fa fa-fw fa-user"></i> <span>About</span></a></li>
+            <li class="active"><a href="#/user_friends"><i class="fa fa-fw fa-users"></i><span> Friends </span><small>({{model.user.friends.length}})</small></a></li>
+            <li><a href="#/event_list"><i class="fa fa-fw fa-calendar"></i><span> Events </span></a></li>
+            <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+        </ul>
+        <ul class="btn-group cover-menu-mobile hidden-lg hidden-md pull-right mobile-menu-top-margin">
+            <button type="button" class="btn btn-theme btn-sm dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul class="dropdown-menu pull-right no-border" role="menu">
+                <li>
+                    <input type="text" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false" id="typeahead1"
+                           data-provide="typeahead" placeholder="search friends">
+                </li>
+                <li><a href="#user_live"><i class="fa fa-fw fa-clock-o"></i> <span>Timeline</span></a></li>
+                <li><a href="#/user"><i class="fa fa-fw fa-user"></i> <span>About</span></a></li>
+                <li class="active"><a href="#/user_friends"><i class="fa fa-fw fa-users"></i><span> Friends </span><small>({{model.user.friends.length}})</small></a></li>
+                <li><a href="#/event_list"><i class="fa fa-fw fa-calendar"></i><span> Events </span></a></li>
+                <li class=""><a ng-click="model.logout()" class="glyphicon glyphicon-log-out"></a></li>
+            </ul>
+        </ul>
+    </div>
+</nav>
+<div class="container bootstrap top-margin">
+    <div class="clearfix">
+        <span class="text-white h3"><li class="fa fa-users"></li>  Friends({{model.user.friends.length}})</span>
+        <span class="pull-right hidden-xs hidden-sm">
+            <a href="#/user_requests" class="text-white h5"><i class="fa"></i> Friend Requests({{model.user.friendRequests.length}})</a>
+            <span style="width: 15px; padding-right: 10px;"></span>
+            <a ng-click="model.openUserProfile()" class="text-white h5"><i class="fa fa-user-plus"></i> Add Friends</a>
+        </span>
+        <span class="hidden-lg hidden-md pull-right">
+           <br/>
+            <a href="#/user_requests" class="text-white h5"><i class="fa"></i> Friend Requests({{model.user.friendRequests.length}})</a>
+            <span style="width: 15px; padding-right: 10px;"></span>
+            <a href="#/user_requests" class="text-white h5"><i class="fa fa-user-plus"></i> Add Friends</a>
+        </span>
+    </div>
+</div>
+<br/>
+<div class="container bootstrap snippets">
+    <div class="row">
+        <div ng-repeat="friend in model.friendsList" class="col-md-3">
+            <div class="panel panel-success rounded shadow">
+                <div class="panel-heading no-border"  style="background-color: #BBD7ED">
+                    <div class="pull-left half">
+                        <div class="media">
+                            <div class="media-object pull-left">
+                                <img src="{{friend.photoUrl}}" alt="..." class="img-circle img-post">
+                            </div>
+                            <div class="media-body">
+                                <a href="#" class="media-heading block mb-0 h4 text-white">{{friend.firstName}} {{friend.lastName}}</a>
+                                <br/>
+                                <span class="text-white h6">Friend since {{friend.connectedOn}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--TODO -->
+                   <!-- <div class="pull-right">
+                        <span class="text-white h6"><i class="fa fa-users"></i> Mutual friends(10)</span>
+                    </div>-->
+                    <div class="clearfix"></div>
+                </div><!-- /.panel-heading -->
+                <div class="panel-footer">
+                    <a ng-click="model.removeFriend(friend._id)" class="btn btn-sm btn-orange"><i class="fa fa-user-times"></i> Remove</a>
+                </div><!-- /.panel-footer -->
+            </div><!-- /.panel -->
+        </div>
+    </div>
+</div>

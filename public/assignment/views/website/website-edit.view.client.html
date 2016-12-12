@@ -37,10 +37,24 @@
         </form>
     </div>
     <div class="col-sm-8">
-        <form>
+        <form name="websiteForm" novalidate>
+            <div ng-show="websiteForm.$invalid && websiteForm.$submitted" class="alert alert-danger" role="alert">
+                There were errors in your form.
+                <ul>
+                    <li ng-show="websiteForm.name.$invalid">Website name is required</li>
+                </ul>
+            </div>
+            <div ng-show="model.error && !websiteForm.$submitted" class="alert alert-danger" role="alert">
+                There were errors in your form.
+                <ul>
+                    <li>Website name is required</li>
+                </ul>
+            </div>
             <div class="form-group container-fluid">
                 <label for="name">Website Name</label>
-                <input ng-model="model.website.name" type="text" class="form-control margin-bottom" id="name" placeholder="Name" value="Website 1"/>
+                <input name="name" ng-model="model.website.name" type="text" class="form-control margin-bottom" id="name" placeholder="Name" value="Website 1" required/>
+                <div ng-show="websiteForm.name.$invalid && websiteForm.$submitted" class="error">Website name is required</div>
+                <div ng-show="model.error && !websiteForm.$submitted" class="error">Website name is required</div>
                 <label for="desc">Website Description</label>
                 <textarea ng-model="model.website.description" class="form-control margin-bottom" rows="5" id="desc" placeholder="Description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ornare libero ut venenatis lobortis. Maecenas nec diam arcu. Etiam iaculis at metus eu aliquam. Vivamus sit amet ultrices libero. Donec posuere, tellus vel ullamcorper tristique, magna mi placerat nisl, vitae pulvinar ipsum metus in elit.
             </textarea>

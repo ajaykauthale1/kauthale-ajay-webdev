@@ -33,6 +33,10 @@
             });
 
         function updatePage(page) {
+            if(page == undefined || page.name == undefined || page.name == "") {
+                vm.error = true;
+                return;
+            }
             PageService.updatePage(vm.pageId, page)
                 .success(function () {
                     $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
@@ -59,6 +63,10 @@
             });
 
         function createPage(page) {
+            if(page == undefined || page.name == undefined || page.name == "") {
+                vm.error = true;
+                return;
+            }
             PageService.createPage(vm.websiteId, page)
                 .success(function () {
                     $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");

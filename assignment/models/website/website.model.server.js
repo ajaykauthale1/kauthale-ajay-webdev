@@ -25,7 +25,7 @@ module.exports = function () {
 
     function createWebsiteForUser(userId, website){
         website.dateCreated = new Date();
-        website._user = userId;
+        website.user = userId;
         return WebsiteModel
             .create(website)
             .then(function (websiteObj) {
@@ -57,7 +57,7 @@ module.exports = function () {
     }
 
     function deleteWebsite(websiteId) {
-        var userId = WebsiteModel.findById(websiteId)._user;
+        var userId = WebsiteModel.findById(websiteId).user;
 
         return WebsiteModel.remove({_id: websiteId})
             .then(function (res) {

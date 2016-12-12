@@ -38,6 +38,10 @@
 
 
         function updateWebsite(website) {
+            if(website == undefined || website.name == undefined || website.name == "") {
+                vm.error = true;
+                return;
+            }
             WebsiteService.updateWebsite(vm.websiteId, website)
                 .success(function () {
                     $location.url("/user/"+vm.userId+"/website/");
@@ -64,6 +68,11 @@
             });
 
         function createWebsite(website) {
+            if(website == undefined || website.name == undefined || website.name == "") {
+                vm.error = true;
+                return;
+            }
+
             WebsiteService.createWebsite(vm.userId, website)
                 .success(function () {
                     $location.url("/user/"+vm.userId+"/website");
